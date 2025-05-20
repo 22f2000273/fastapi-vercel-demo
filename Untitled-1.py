@@ -1,11 +1,11 @@
+# ✅ Correct: Convert FastAPI to Vercel-compatible ASGI handler
 from fastapi import FastAPI
+from mangum import Mangum  # ASGI adapter
 
-
-import json
 app = FastAPI()
-with open("data.json") as f:
-    students = json.load(f)
 
-@app.get("/students")
-def get_students():
-    return students
+@app.get("/")
+def home():
+    return {"message": "Hello from Vercel"}
+
+handler = Mangum(app)  # ✅ Vercel uses this
